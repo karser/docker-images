@@ -35,7 +35,7 @@ services:
             - db
         restart: on-failure:10
         ports:
-            - 8082:80
+            - 8080:80
     db:
         image: postgres:9.6-alpine
         volumes:
@@ -50,7 +50,7 @@ services:
 
 Manual build
 ```
-export MICROWEBER_VERSION=1.1.2
+export MICROWEBER_VERSION=1.1.3
  
 docker build --build-arg MICROWEBER_VERSION=${MICROWEBER_VERSION}.x-dev \
     --tag karser/microweber:$MICROWEBER_VERSION \

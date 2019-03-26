@@ -8,6 +8,7 @@ The difference from the [official](https://github.com/microweber/docker) docker 
 They are tracked in the repo and at the same time are volumes
 that can be modified by user.
 - The docker image contains up-to-date CMS version.
+- Restricted access to packagist dependencies from the web.
 
 
 Docker compose example:

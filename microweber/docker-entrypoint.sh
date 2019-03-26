@@ -17,6 +17,9 @@ if [[ "$1" == httpd* ]]; then
         sed -i "s#/var/www/localhost/htdocs#/var/www/microweber#" /etc/apache2/httpd.conf
         printf "\n<Directory \"/var/www/microweber\">\n\tOptions Indexes FollowSymLinks\n\tAllowOverride All\n\tRequire all granted\n</Directory>\n" >> /etc/apache2/httpd.conf
 
+        cp /var/www/microweber-defaults/.htaccess /var/www/microweber
+        cat /var/www/microweber-defaults/htaccess_secured >> /var/www/microweber/.htaccess
+        chown -R apache:apache /var/www/microweber/.htaccess
 
         if [ `ls -A /var/www/microweber/config | wc -m` == "0" ]; then
             cp -r /var/www/microweber-defaults/config /var/www/microweber

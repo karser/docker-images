@@ -1,7 +1,7 @@
 FROM alpine:3.9
 
 ARG PHP_VERSION=7.3
-ARG MICROWEBER_VERSION=1.1.3.x-dev
+ARG MICROWEBER_VERSION=dev-master
 
 ADD https://dl.bintray.com/php-alpine/key/php-alpine.rsa.pub /etc/apk/keys/php-alpine.rsa.pub
 

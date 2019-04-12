@@ -16,7 +16,7 @@ Docker compose example:
 version: '3.3'
 services:
     microweber:
-        image: karser/microweber:1.1.3
+        image: karser/microweber:1.1.4
         volumes:
             - ./config:/var/www/microweber/config
             - ./userfiles:/var/www/microweber/userfiles
@@ -51,7 +51,7 @@ services:
 
 Manual build
 ```
-export MICROWEBER_VERSION=1.1.3
+export MICROWEBER_VERSION=1.1.4
  
 docker build --build-arg MICROWEBER_VERSION=${MICROWEBER_VERSION}.x-dev \
     --tag karser/microweber:$MICROWEBER_VERSION \

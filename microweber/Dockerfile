@@ -59,9 +59,7 @@ RUN set -eux; \
 RUN mkdir -p /var/www/microweber-defaults; \
     mv /var/www/microweber/config /var/www/microweber-defaults; \
     mv /var/www/microweber/userfiles /var/www/microweber-defaults; \
-    mkdir -p /var/www/microweber/config /var/www/microweber/userfiles; \
-    mv /var/www/microweber/.htaccess /var/www/microweber-defaults
-
+    mkdir -p /var/www/microweber/config /var/www/microweber/userfiles
 
 
 USER root
@@ -70,7 +68,6 @@ WORKDIR /var/www/microweber
 
 COPY ./php.ini /etc/php7/conf.d/50_setting.ini
 COPY ./docker-entrypoint.sh /usr/local/bin/docker-entrypoint
-COPY ./htaccess_secured /var/www/microweber-defaults
 
 VOLUME /var/www/microweber/config
 VOLUME /var/www/microweber/userfiles

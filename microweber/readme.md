@@ -15,7 +15,7 @@ Docker compose example:
 version: '3.3'
 services:
     microweber:
-        image: karser/microweber:1.1.4
+        image: karser/microweber:1.1.5
         volumes:
             - ./config:/var/www/microweber/config
             - ./userfiles:/var/www/microweber/userfiles
@@ -48,9 +48,20 @@ services:
 ```
 
 
+### After update:
+
+The `userfiles` directory is bind-mounted so it needs to be updated manually
+```
+docker exec -it <container_name> bash
+cp -r /var/www/microweber-defaults/userfiles /var/www/microweber
+chown -R apache:apache /var/www/microweber/userfiles
+```
+
+
 Manual build
 ```
-export MICROWEBER_VERSION=1.1.4
+cd microweber/
+export MICROWEBER_VERSION=1.1.5
  
 docker build --build-arg MICROWEBER_VERSION=${MICROWEBER_VERSION}.x-dev \
     --tag karser/microweber:$MICROWEBER_VERSION \

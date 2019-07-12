@@ -61,7 +61,7 @@ chown -R apache:apache /var/www/microweber/userfiles
 Manual build
 ```
 cd microweber/
-export MICROWEBER_VERSION=1.1.5
+export MICROWEBER_VERSION=1.1.8
  
 docker build --build-arg MICROWEBER_VERSION=${MICROWEBER_VERSION}.x-dev \
     --tag karser/microweber:$MICROWEBER_VERSION \

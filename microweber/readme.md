@@ -7,7 +7,6 @@ The difference from the [official](https://github.com/microweber/docker) docker 
 - Solved potential conflict of config/userfiles folders.
 They are tracked in the repo and at the same time are volumes
 that can be modified by user.
-- The docker image contains up-to-date CMS version.
 
 
 Docker compose example:
@@ -61,7 +60,7 @@ chown -R apache:apache /var/www/microweber/userfiles
 Manual build
 ```
 cd microweber/
-export MICROWEBER_VERSION=1.1.8
+export MICROWEBER_VERSION=1.1.11
  
 docker build --build-arg MICROWEBER_VERSION=${MICROWEBER_VERSION}.x-dev \
     --tag karser/microweber:$MICROWEBER_VERSION \

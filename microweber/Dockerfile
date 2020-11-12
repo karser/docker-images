@@ -47,11 +47,15 @@ RUN set -eux; \
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 ENV PATH="${PATH}:/root/.composer/vendor/bin"
 
+#    composer config -g repo.packagist composer https?://packagist.jp; \
+RUN set -eux; \
+    composer global require "hirak/prestissimo:^0.3" --prefer-dist --no-progress --no-suggest --classmap-authoritative; \
+    composer clear-cache;
+
 USER apache
 WORKDIR /var/www
 
 RUN set -eux; \
-    composer global require "hirak/prestissimo:^0.3" --prefer-dist --no-progress --no-suggest --classmap-authoritative; \
     composer create-project microweber/microweber /var/www/microweber ${MICROWEBER_VERSION} --no-progress --prefer-dist --no-dev --no-scripts; \
     composer clear-cache;
 

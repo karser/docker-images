@@ -7,7 +7,7 @@ set -e
 apk update
 
 # install pg_dump
-apk add postgresql-client
+apk add postgresql15-client
 
 # install s3 tools
 apk --no-cache add aws-cli bash findutils groff less python3 tini inotify-tools

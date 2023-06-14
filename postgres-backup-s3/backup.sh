@@ -43,6 +43,11 @@ if [ "${POSTGRES_PASSWORD}" = "**None**" ]; then
   exit 1
 fi
 
+if [ -n "${ENCRYPT_PUBLIC_KEY_PATH}" ] && [ ! -f ${ENCRYPT_PUBLIC_KEY_PATH} ]; then
+    echo "The path that you specified in ENCRYPT_PUBLIC_KEY_PATH (${ENCRYPT_PUBLIC_KEY_PATH}) does not exist. Did you forget to bind-volume it?"
+    exit 1
+fi
+
 if [ "${S3_ENDPOINT}" == "**None**" ]; then
   AWS_ARGS=""
 else
@@ -61,8 +66,20 @@ echo "Creating dump of ${POSTGRES_DATABASE} database from ${POSTGRES_HOST}..."
 
 pg_dump $POSTGRES_HOST_OPTS $POSTGRES_DATABASE | gzip > dump.sql.gz
 
+
+if [ -n "${ENCRYPT_PUBLIC_KEY_PATH}" ]; then
+  echo "Encrypting dump..."
+  openssl smime -encrypt -binary -text -aes256 -in dump.sql.gz -out dump.sql.gz.enc -outform DER ${ENCRYPT_PUBLIC_KEY_PATH} || exit 2
+  rm -f dump.sql.gz
+  FILE_EXT="sql.gz.enc"
+else
+  FILE_EXT="sql.gz"
+fi
+
+
 echo "Uploading dump to $S3_BUCKET"
 
-cat dump.sql.gz | aws $AWS_ARGS s3 cp - s3://$S3_BUCKET/$S3_PREFIX/${POSTGRES_DATABASE}_$(date +"%Y-%m-%dT%H:%M:%SZ").sql.gz || exit 2
+cat dump.${FILE_EXT} | aws $AWS_ARGS s3 cp - s3://$S3_BUCKET/$S3_PREFIX/${POSTGRES_DATABASE}_$(date +"%Y-%m-%dT%H:%M:%SZ").${FILE_EXT} || exit 2
+rm -f dump.${FILE_EXT}
 
 echo "SQL backup uploaded successfully"
